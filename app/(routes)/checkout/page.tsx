@@ -4,7 +4,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY!);
 
 export default function CheckoutPage() {
    useEffect(() => {
@@ -23,7 +23,7 @@ export default function CheckoutPage() {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/stripe/create-checkout-session`, {
+      const res = await fetch(`${process.env.API_URL}/api/stripe/create-checkout-session`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

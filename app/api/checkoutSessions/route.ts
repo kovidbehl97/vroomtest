@@ -11,7 +11,7 @@ import { Car } from '../../_lib/types';
 export async function POST(req: Request) {
   try {
     const headersList = await headers();
-    const origin = headersList.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'https://8dd49e955fd0.ngrok-free.app';
+    const origin = headersList.get('origin') || process.env.BASE_URL || 'https://vroomtest-afid87aoo-kovids-projects.vercel.app/';
 
     const body = await req.json();
     const { carId, pickupDate, dropoffDate, pickupTime, dropoffTime, location } = body;
