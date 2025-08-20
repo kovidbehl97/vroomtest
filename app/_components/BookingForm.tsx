@@ -64,7 +64,7 @@ export default function BookingFormClient({ carId }: BookingFormClientProps) {
     location &&
     carPrice
   );
-
+  console.log("Stripe key:", process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
   return (
     <div className="container mx-auto py-10 relative">
       <h1 className="text-3xl font-bold mb-6 text-center w-full">
