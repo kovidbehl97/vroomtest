@@ -1,6 +1,7 @@
 // next-auth.d.ts
 import NextAuth, { DefaultUser } from 'next-auth'; // Import necessary types if used in augmentations
 
+
 // Extend the built-in User type if needed for role etc.
 declare module 'next-auth' {
   interface User extends DefaultUser {

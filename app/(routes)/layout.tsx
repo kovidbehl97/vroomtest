@@ -5,7 +5,7 @@ import NavBar from "../_components/NavBar";
 
 import SessionProvider from "../_context/SessionProvider";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../_lib/auth"; // Adjust the import path as necessary
 
 
 const geistSans = Geist({

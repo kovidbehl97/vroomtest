@@ -5,7 +5,7 @@ import AdminDashboardClient from './AdminDashboardClient'; // Import the Client 
 
 // *** Import getServerSession and your authOptions ***
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../api/auth/[...nextauth]/route"; // *** Adjust the import path as necessary ***
+import { authOptions } from "../../_lib/auth"; // *** Adjust the import path as necessary ***
 
 
 export default async function DashboardPage() {

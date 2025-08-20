@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth/next";
 // *** Adjust the import path to your NextAuth config file ***
 // Make sure authOptions is exported from this file:
 // export const authOptions = { ... }
-import { authOptions } from "../../api/auth/[...nextauth]/route"; // Adjust the import path to your NextAuth config file
+import { authOptions } from "../../_lib/auth"; // Adjust the import path to your NextAuth config file
 
 import { redirect } from "next/navigation";
 import { getMongoClient } from "../../_lib/mongodb"; // Your MongoDB client utility

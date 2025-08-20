@@ -15,8 +15,10 @@ export default function CarCard({ car, isDashBoardPage, onEditClick, onDeleteCli
       {/* Updated section to display the car image */}
       <div className='h-full w-56 mr-5'>
         <Image
-          src={car.imageUrl || 'https://res.cloudinary.com/dwpldlqbv/image/upload/v1755585552/zdjebzcgakzcgpo2uhwj.jpg'} // Use the imageUrl from the database
+          src={`${car.imageUrl || 'https://res.cloudinary.com/dwpldlqbv/image/upload/v1755585552/zdjebzcgakzcgpo2uhwj.jpg'}`} // Use the imageUrl from the database
           alt={`${car.make} ${car.model}`}
+          width={"200"}
+          height={"200"}
           className="object-cover h-full w-full rounded-md"
         />
       </div>

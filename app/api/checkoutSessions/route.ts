@@ -5,7 +5,7 @@ import { stripe } from '../../_lib/stripe';
 import { ObjectId } from 'mongodb';
 import { getMongoClient } from '../../_lib/mongodb';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '../../_lib/auth';
 import { Car } from '../../_lib/types';
 
 export async function POST(req: Request) {
@@ -84,11 +84,14 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ sessionId: session.id });
   } catch (err: unknown) {
-    console.error('Stripe checkout error:', err);
+    // Log the specific error message from Stripe for detailed debugging
     if (err instanceof Error) {
+      console.error('Stripe checkout error:', err.message);
       return NextResponse.json({ error: err.message || 'Internal Server Error' }, { status: 500 });
+    } else {
+      console.error('Stripe checkout error: Unknown error occurred', err);
+      return NextResponse.json({ error: 'Internal Server Error', message: 'An unknown error occurred' }, { status: 500 });
     }
-    return NextResponse.json({ error: 'Internal Server Error', message: 'An unknown error occurred' }, { status: 500 });
   }
 }
 
@@ -97,7 +100,7 @@ async function getCarDetails(carId: string): Promise<Car | null> {
   try {
     const client = await getMongoClient();
     const db = client.db('cars');
-    const car = await db.collection('cars').findOne({ _id: new ObjectId(carId) }) as Car | null;
+    const car = await db.collection('cars').findOne({ _id: new ObjectId(carId) }) as unknown as Car | null;
     return car;
   } catch (error) {
     console.error('Error fetching car details:', error);
