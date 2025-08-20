@@ -98,7 +98,7 @@ export default function BookingFormClient({ carId }: BookingFormClientProps) {
                 </div>
                 <div className="mb-4 w-full">
                   <label htmlFor="dropoffDate" className="block mb-1 text-gray-700">
-                    Drop-off Date
+                    Drop-off Date{`${ process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`}
                   </label>
                   <input
                     id="dropoffDate"
