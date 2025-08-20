@@ -9,8 +9,12 @@ import { getServerSession } from "next-auth";
 // import { connectToDatabase } from '@/lib/mongodb'; // Your DB connection
 // import { ObjectId } from 'mongodb';
 
-
-export default async function BookingPage({params}: { params: { id: string } }) {
+interface BookingPageProps {
+  params: {
+    id: string;
+  };
+}
+export default async function BookingPage({params}: BookingPageProps) {
   const session = await getServerSession(); // Get session on the server
   const { id: carId } = await params;
 
