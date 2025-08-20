@@ -16,7 +16,7 @@ interface BookingPageProps {
 }
 export default async function BookingPage({params}: BookingPageProps) {
   const session = await getServerSession(); // Get session on the server
-  const { id: carId } = await params;
+  const { id: carId } = params;
 
   // Basic Authentication Check
   if (!session || !session.user) {
