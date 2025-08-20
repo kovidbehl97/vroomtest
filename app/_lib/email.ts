@@ -11,8 +11,17 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASSWORD, 
   },
 });
-
-export async function sendBookingConfirmation(toEmail: string, bookingDetails: any) {
+interface BookingDetails {
+  userName?: string;
+  car: {
+    make: string;
+    model: string;
+  };
+  pickupDate: string;
+  dropoffDate: string;
+  sessionId: string;
+}
+export async function sendBookingConfirmation(toEmail: string, bookingDetails: BookingDetails) {
   try {
     const mailOptions = {
       from: 'checkouts@vroomify.publicvm.com', // Your verified sender email
@@ -35,7 +44,11 @@ export async function sendBookingConfirmation(toEmail: string, bookingDetails: a
 
     await transporter.sendMail(mailOptions);
     console.log("Email sent successfully!");
-  } catch (error) {
-    console.error("Error sending email:", error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error sending email:", error.message);
+    } else {
+      console.error("Unknown error sending email:", error);
+    }
   }
 }

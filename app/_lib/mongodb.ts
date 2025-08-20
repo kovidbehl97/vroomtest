@@ -8,10 +8,10 @@ if (!MONGODB_URI) {
   throw new Error('Please add your Mongo URI to .env.local');
 }
 
-let cachedClientPromise: Promise<MongoClient> | null = null;
+
 
 export async function getMongoClient(): Promise<MongoClient> {
-  let globalWithMongo = global as typeof globalThis & {
+  const globalWithMongo = global as typeof globalThis & {
     _mongoClientPromise?: Promise<MongoClient>;
   };
 

@@ -14,9 +14,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
       return NextResponse.json({ error: 'Car not found' }, { status: 404 });
     }
     return NextResponse.json(car);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('GET /api/cars/[id] - Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error', message: (error as any).message }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: 'Internal Server Error', message: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Internal Server Error', message: 'An unknown error occurred' }, { status: 500 });
   }
 }
 
@@ -45,9 +48,12 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       return NextResponse.json({ error: 'Car not found' }, { status: 404 });
     }
     return NextResponse.json({ message: 'Car updated' });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('PUT /api/cars/[id] - Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error', message: (error as any).message }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: 'Internal Server Error', message: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Internal Server Error', message: 'An unknown error occurred' }, { status: 500 });
   }
 }
 
@@ -64,8 +70,11 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
       return NextResponse.json({ error: 'Car not found' }, { status: 404 });
     }
     return NextResponse.json({ message: 'Car deleted' });
-  } catch (error) {
-     console.error('DELETE /api/cars/[id] - Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error', message: (error as any).message }, { status: 500 });
+  } catch (error: unknown) {
+    console.error('DELETE /api/cars/[id] - Error:', error);
+    if (error instanceof Error) {
+      return NextResponse.json({ error: 'Internal Server Error', message: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Internal Server Error', message: 'An unknown error occurred' }, { status: 500 });
   }
 }

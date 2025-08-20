@@ -95,9 +95,14 @@ export default function AdminCarModal({
         console.log(`Car ${car._id} updated successfully`);
       }
       onSuccess();
-    } catch (err: any) {
-      console.error(`Error during ${operation} car operation:`, err);
-      setError(err.message || `Failed to ${operation} car.`);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(`Error during ${operation} car operation:`, err.message);
+        setError(err.message || `Failed to ${operation} car.`);
+      } else {
+        console.error(`Error during ${operation} car operation:`, err);
+        setError(`Failed to ${operation} car.`);
+      }
     } finally {
       setLoading(false);
     }
@@ -111,9 +116,14 @@ export default function AdminCarModal({
         await deleteCar(car._id.toString());
         console.log(`Car ${car._id} deleted successfully`);
         onSuccess();
-      } catch (err: any) {
-        console.error(`Error during delete car operation:`, err);
-        setError(err.message || "Failed to delete car.");
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error(`Error during delete car operation:`, err.message);
+          setError(err.message || "Failed to delete car.");
+        } else {
+          console.error(`Error during delete car operation:`, err);
+          setError("Failed to delete car.");
+        }
       } finally {
         setLoading(false);
       }

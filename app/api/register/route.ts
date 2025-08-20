@@ -37,8 +37,11 @@ export async function POST(request: Request) {
       { status: 201 }
     );
 
-  } catch (error: any) { // Use any for error type
+  } catch (error: unknown) {
     console.error('Registration API Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error', message: error.message }, { status: 500 }); // Include message for debugging
+    if (error instanceof Error) {
+      return NextResponse.json({ error: 'Internal Server Error', message: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Internal Server Error', message: 'An unknown error occurred' }, { status: 500 });
   }
 }

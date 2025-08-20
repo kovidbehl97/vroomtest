@@ -5,6 +5,7 @@ import { fetchCar } from '../../../_lib/api';
 import { Car } from '../../../_lib/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function CarDetails() {
   const { id } = useParams();
@@ -44,7 +45,7 @@ export default function CarDetails() {
         
         {/* Car Image */}
         <div className="w-full md:w-1/2">
-          <img
+          <Image
             src={car.imageUrl || 'https://res.cloudinary.com/dwpldlqbv/image/upload/v1755585552/zdjebzcgakzcgpo2uhwj.jpg'} // Use imageUrl from database or fallback to placeholder
             alt={`${car.make} ${car.model}`}
             className="rounded-lg object-cover w-full h-64 md:h-80 shadow-sm"

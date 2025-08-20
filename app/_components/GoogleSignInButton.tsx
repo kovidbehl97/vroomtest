@@ -45,14 +45,18 @@ const GoogleSignInButton = ({ onError, onSuccess, loading }: GoogleSignInButtonP
       }
 
 
-    } catch (err: any) {
-      // This catch is more for errors *during the signIn call itself*, not login failure
+    } catch (err: unknown) {
       console.error('Unexpected error during Google signIn call:', err);
-      if (onError) {
-        // General error message
-        onError('An unexpected error occurred during Google sign in.');
+      if (err instanceof Error) {
+        if (onError) {
+          onError('An unexpected error occurred during Google sign in: ' + err.message);
+        }
+      } else {
+        if (onError) {
+          onError('An unexpected error occurred during Google sign in.');
+        }
       }
-    } 
+    }
   };
 
   return (

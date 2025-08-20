@@ -24,8 +24,11 @@ export default function RegisterPage() {
         throw new Error(error);
       }
       router.push('/login');
-    } catch (err: any) {
-      setError(err.message || 'Registration failed');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message || 'Failed to register');
+      }
+      throw new Error('An unknown error occurred while fetching cars');
     }
   };
 

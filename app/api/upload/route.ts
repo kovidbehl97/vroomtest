@@ -8,33 +8,40 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+interface CloudinaryUploadResult {
+  secure_url: string;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const file = formData.get('image') as File | null;
-    
+
     if (!file) {
       return NextResponse.json({ error: 'No image file uploaded' }, { status: 400 });
     }
-    
+
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    
+
     // Upload the image to Cloudinary
-    const uploadResult = await new Promise((resolve, reject) => {
+    const uploadResult: CloudinaryUploadResult = await new Promise((resolve, reject) => {
       cloudinary.uploader.upload_stream({ resource_type: 'auto' }, (error, result) => {
         if (error) {
           reject(error);
         }
-        resolve(result);
+        resolve(result as CloudinaryUploadResult);
       }).end(buffer);
     });
-    
-    const imageUrl = (uploadResult as any).secure_url;
-    
+
+    const imageUrl = uploadResult.secure_url;
+
     return NextResponse.json({ imageUrl });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Upload Error:', error);
-    return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: 'Failed to upload image', message: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Failed to upload image', message: 'An unknown error occurred' }, { status: 500 });
   }
 }

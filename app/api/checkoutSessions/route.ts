@@ -83,10 +83,12 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ sessionId: session.id });
-  } catch (err: any) {
-    // Log the specific error message from Stripe for detailed debugging
-    console.error('Stripe checkout error:', err.message);
-    return NextResponse.json({ error: err.message || 'Internal Server Error' }, { status: 500 });
+  } catch (err: unknown) {
+    console.error('Stripe checkout error:', err);
+    if (err instanceof Error) {
+      return NextResponse.json({ error: err.message || 'Internal Server Error' }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Internal Server Error', message: 'An unknown error occurred' }, { status: 500 });
   }
 }
 

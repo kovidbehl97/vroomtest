@@ -48,9 +48,12 @@ export async function POST(req: NextRequest) {
     console.log('Verifying webhook signature...');
     event = stripe.webhooks.constructEvent(rawBody, signature!, endpointSecret);
     console.log(`Event verified: ${event.type} (${event.id})`);
-  } catch (err: any) {
-    console.error(`Webhook signature verification failed: ${err.message}`);
-    return new NextResponse(`Webhook signature verification failed: ${err.message}`, { status: 400 });
+  } catch (err: unknown) {
+    console.error('Webhook signature verification failed:', err);
+    if (err instanceof Error) {
+      return new NextResponse(`Webhook signature verification failed: ${err.message}`, { status: 400 });
+    }
+    return new NextResponse('Webhook signature verification failed: Unknown error', { status: 400 });
   }
 
   if (event.type === 'checkout.session.completed') {
@@ -65,7 +68,6 @@ export async function POST(req: NextRequest) {
       if (sessionWithDetails.payment_status === 'paid') {
         console.log('Payment confirmed, preparing booking...');
 
-        // Pull userId from metadata
         const bookingData = {
           userId: sessionWithDetails.metadata?.userId || 'guest',
           carId: sessionWithDetails.metadata?.carId || 'unknown',
@@ -111,16 +113,22 @@ export async function POST(req: NextRequest) {
           } else {
             console.log('Booking already exists, skipping insert and email');
           }
-        } catch (mongoError: any) {
-          console.error('MongoDB error:', mongoError.message);
-          return new NextResponse(`MongoDB operation failed: ${mongoError.message}`, { status: 500 });
+        } catch (mongoError: unknown) {
+          console.error('MongoDB error:', mongoError);
+          if (mongoError instanceof Error) {
+            return new NextResponse(`MongoDB operation failed: ${mongoError.message}`, { status: 500 });
+          }
+          return new NextResponse('MongoDB operation failed: Unknown error', { status: 500 });
         }
       } else {
         console.log(`Payment status not paid: ${sessionWithDetails.payment_status}`);
       }
-    } catch (err: any) {
-      console.error('Error processing session:', err.message);
-      return new NextResponse(`Failed to process session logic: ${err.message}`, { status: 500 });
+    } catch (err: unknown) {
+      console.error('Error processing session:', err);
+      if (err instanceof Error) {
+        return new NextResponse(`Failed to process session logic: ${err.message}`, { status: 500 });
+      }
+      return new NextResponse('Failed to process session logic: Unknown error', { status: 500 });
     }
   } else {
     console.log(`Ignoring event type: ${event.type}`);

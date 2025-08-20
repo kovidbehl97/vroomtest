@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function StripeCheckoutButton({ carId, pickupDate, dropoffDate, pickupTime, dropoffTime, location }: Props) {
-  const [canceled, setCanceled] = useState(false);
+  const [canceled] = useState(false);
 console.log(pickupDate)
   const handleCheckout = async () => {
     try {

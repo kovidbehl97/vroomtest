@@ -16,9 +16,13 @@ export default async function Success({ searchParams }: { searchParams: { sessio
       session = await stripe.checkout.sessions.retrieve(session_id, {
         expand: ['customer_details'],
       });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(`Error retrieving Stripe session ${session_id}:`, error.message);
+    } else {
       console.error(`Error retrieving Stripe session ${session_id}:`, error);
-      redirect('/');
+    }
+    redirect('/');
   }
 
   const { customer_details } = session;

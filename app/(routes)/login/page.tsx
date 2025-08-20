@@ -90,7 +90,7 @@ export default function LoginPage() {
         <GoogleSignInButton />
       </div>
       <p className="mt-4 text-center">
-        Don't have an account?
+        Don&apos;t have an account?
         <Link
           href="/register"
           className="text-gray-700 font-black hover:underline ml-1"

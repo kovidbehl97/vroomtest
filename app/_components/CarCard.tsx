@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Car } from '../_lib/types';
+import Image from 'next/image';
 
 interface CarCardProps {
     car: Car;
@@ -13,7 +14,7 @@ export default function CarCard({ car, isDashBoardPage, onEditClick, onDeleteCli
     <div className="border relative rounded-xl shadow-gray-200 shadow-md border-gray-200  flex justify-between items-center overflow-hidden h-52 py-4 px-5">
       {/* Updated section to display the car image */}
       <div className='h-full w-56 mr-5'>
-        <img
+        <Image
           src={car.imageUrl || 'https://res.cloudinary.com/dwpldlqbv/image/upload/v1755585552/zdjebzcgakzcgpo2uhwj.jpg'} // Use the imageUrl from the database
           alt={`${car.make} ${car.model}`}
           className="object-cover h-full w-full rounded-md"

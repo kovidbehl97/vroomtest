@@ -1,4 +1,3 @@
-import { MongoClient, ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]/route';
@@ -18,7 +17,7 @@ export async function GET(request: Request) {
     const client = await getMongoClient();
     const db = client.db('cars'); // Or use getMongoDb() if you added it
 
-    let query: any = {};
+    const query: Record<string, any> = {};
 
     if (search) {
       query.$or = [
@@ -43,9 +42,12 @@ export async function GET(request: Request) {
     console.log('GET /api/cars - Query:', query, 'Page:', page, 'Limit:', limit, 'Cars found:', cars.length, 'Total Cars:', totalCars);
 
     return NextResponse.json({ cars, total: totalCars });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('GET /api/cars - Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error', message: error.message }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: 'Internal Server Error', message: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Internal Server Error', message: 'An unknown error occurred' }, { status: 500 });
   }
 }
 
@@ -80,8 +82,11 @@ export async function POST(request: Request) {
       { _id: result.insertedId, make, model, year, price, mileage, carType, transmission, imageUrl },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('POST /api/cars - Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error', message: error.message }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: 'Internal Server Error', message: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Internal Server Error', message: 'An unknown error occurred' }, { status: 500 });
   }
 }

@@ -3,7 +3,7 @@
 // Remove useState, useEffect, and your custom fetch
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Navbar() {
   // Use the useSession hook provided by next-auth
