@@ -46,8 +46,11 @@ export async function fetchCar(id: string) {
       throw new Error(error.error || "Failed to fetch car");
     }
     return res.json() as Promise<Car>;
-  } catch (error: any) {
-    throw new Error(error.message || "Failed to fetch car");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to fetch car");
+    }
+    throw new Error("An unknown error occurred while fetching the car");
   }
 }
 
@@ -75,8 +78,11 @@ export async function createBooking(data: {
       throw new Error(error.error || "Failed to create booking");
     }
     return res.json() as Promise<Booking>;
-  } catch (error: any) {
-    throw new Error(error.message || "Failed to create booking");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to create booking");
+    }
+    throw new Error("An unknown error occurred while creating the booking");
   }
 }
 
@@ -97,8 +103,11 @@ export async function fetchBookingHistory() {
       throw new Error(error.error || "Failed to fetch booking history");
     }
     return res.json() as Promise<Booking[]>;
-  } catch (error: any) {
-    throw new Error(error.message || "Failed to fetch booking history");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to fetch booking history");
+    }
+    throw new Error("An unknown error occurred while fetching booking history");
   }
 }
 
@@ -121,8 +130,11 @@ export async function createCar(data: Partial<Car>) {
       throw new Error(error.error || "Failed to create car");
     }
     return res.json() as Promise<Car>;
-  } catch (error: any) {
-    throw new Error(error.message || "Failed to create car");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to create car");
+    }
+    throw new Error("An unknown error occurred while creating the car");
   }
 }
 
@@ -145,8 +157,11 @@ export async function updateCar(id: string, data: Partial<Car>) {
       throw new Error(error.error || "Failed to update car");
     }
     return res.json() as Promise<Car>;
-  } catch (error: any) {
-    throw new Error(error.message || "Failed to update car");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to update car");
+    }
+    throw new Error("An unknown error occurred while updating the car");
   }
 }
 
@@ -168,8 +183,11 @@ export async function deleteCar(id: string) {
       throw new Error(error.error || "Failed to delete car");
     }
     return res.json();
-  } catch (error: any) {
-    throw new Error(error.message || "Failed to delete car");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to delete car");
+    }
+    throw new Error("An unknown error occurred while deleting the car");
   }
 }
 
@@ -195,7 +213,10 @@ export async function registerUser(data: {
       name: string;
       role: string;
     }>;
-  } catch (error: any) {
-    throw new Error(error.message || "Failed to register");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to register");
+    }
+    throw new Error("An unknown error occurred while registering the user");
   }
 }

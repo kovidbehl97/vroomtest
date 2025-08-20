@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     const client = await getMongoClient();
     const db = client.db('cars'); // Or use getMongoDb() if you added it
 
-    const query: Record<string, any> = {};
+    const query: Record<string, unknown> = {};
 
     if (search) {
       query.$or = [
