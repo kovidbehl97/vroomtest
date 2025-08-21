@@ -23,7 +23,6 @@ export default function BookingFormClient({ carId }: BookingFormClientProps) {
     const fetchCarPrice = async () => {
       try {
         const res = await fetch(`/api/cars/${carId}`);
-        console.log("Stripe key:", process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
         if (!res.ok) {
           throw new Error("Failed to fetch car details");
         }
@@ -98,7 +97,7 @@ export default function BookingFormClient({ carId }: BookingFormClientProps) {
                 </div>
                 <div className="mb-4 w-full">
                   <label htmlFor="dropoffDate" className="block mb-1 text-gray-700">
-                    Drop-off Date{`${ process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`}
+                    Drop-off Date
                   </label>
                   <input
                     id="dropoffDate"

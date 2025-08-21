@@ -1,3 +1,4 @@
+// app/(routes)/checkout/page.tsx
 'use client';
 import { useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';

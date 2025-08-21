@@ -42,7 +42,7 @@ export default function Navbar() {
           href="/"
           className="text-xl font-extrabold hover:underline text-white"
         >
-          <span className="relative bottom-0.5">🏎️ </span>VROOMIF
+          <span className="relative bottom-0.5">🏎️ </span>VROOMIFY
         </Link>
 
         {/* Navigation Links */}
