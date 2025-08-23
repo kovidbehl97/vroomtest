@@ -52,10 +52,6 @@ export async function sendBookingConfirmation(toEmail: string, bookingDetails: B
               <td style="padding: 8px; border-bottom: 1px solid #e0e0e0;"><strong>Drop-off Date</strong></td>
               <td style="padding: 8px; border-bottom: 1px solid #e0e0e0;">${bookingDetails.dropoffDate}</td>
             </tr>
-            <tr>
-              <td style="padding: 8px; border-bottom: 1px solid #e0e0e0;"><strong>Booking ID</strong></td>
-              <td style="padding: 8px; border-bottom: 1px solid #e0e0e0;">${bookingDetails.sessionId}</td>
-            </tr>
             ${
               bookingDetails.amount
                 ? `<tr>
