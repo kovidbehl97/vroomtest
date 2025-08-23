@@ -90,6 +90,7 @@ export async function POST(req: NextRequest) {
           sessionId: sessionWithDetails.id,
           pickupDate: sessionWithDetails.metadata?.pickupDate || 'N/A',
           dropoffDate: sessionWithDetails.metadata?.dropoffDate || 'N/A',
+          amount: sessionWithDetails.amount_total! / 100,
           car: {
             make: sessionWithDetails.line_items?.data[0]?.price?.product?.name || 'Unknown Make',
             model: sessionWithDetails.line_items?.data[0]?.price?.product?.description || 'Unknown Model',
