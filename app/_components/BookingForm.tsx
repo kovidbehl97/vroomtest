@@ -93,6 +93,7 @@ export default function BookingFormClient({ carId }: BookingFormClientProps) {
                     onChange={(e) => setPickupDate(e.target.value)}
                     className="border p-2 rounded w-full"
                     required
+                    pattern="\d{4}-\d{2}-\d{2}" 
                   />
                 </div>
                 <div className="mb-4 w-full">
@@ -106,6 +107,7 @@ export default function BookingFormClient({ carId }: BookingFormClientProps) {
                     onChange={(e) => setDropoffDate(e.target.value)}
                     className="border p-2 rounded w-full"
                     required
+                    pattern="\d{4}-\d{2}-\d{2}" 
                   />
                 </div>
               </div>
