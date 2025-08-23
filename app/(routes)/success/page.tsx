@@ -52,7 +52,12 @@ export default async function Success({ searchParams }: SuccessPageProps) {
           <div className="text-left mb-6 p-4">
             <h2 className="text-xl font-semibold mb-2">Booking Details:</h2>
             <ul className="space-y-1">
-              <li><strong>Car:</strong> {bookedItem.name}</li>
+              <li>
+                <strong>Car:</strong> {bookedItem.name}
+              </li>
+              <li>
+                <strong>Price:</strong> {lineItem?.price?.currency?.toUpperCase()}{" "}{(lineItem?.price?.unit_amount! / 100).toFixed(2)}
+              </li>
             </ul>
           </div>
         )}
