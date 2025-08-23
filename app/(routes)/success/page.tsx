@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { stripe } from '../../_lib/stripe';
 import { redirect } from 'next/navigation';
+import { Stripe } from 'stripe';
 
 interface SuccessPageProps {
   searchParams: Promise<{ session_id?: string }>;
@@ -30,38 +31,40 @@ export default async function Success({ searchParams }: SuccessPageProps) {
   }
 
   const { customer_details, line_items } = session;
-  const customerEmail = customer_details?.email;
-  const bookedItem = line_items?.data[0].price?.product as any;
+  const customerEmail = customer_details?.email || 'Customer';
+
+  // Safely type the booked item
+  let bookedItem: Stripe.Product | null = null;
+  const lineItem = line_items?.data[0];
+  if (lineItem?.price?.product && typeof lineItem.price.product !== 'string') {
+    bookedItem = lineItem.price.product as Stripe.Product;
+  }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col items-center justify-center py-12 px-4">
-      <div className="bg-gray-800 rounded-lg shadow-lg p-8 max-w-md w-full text-center">
-        <h1 className="text-3xl font-bold mb-4 text-yellow-400">Booking Confirmed!</h1>
+    <section className="min-h-screen flex flex-col justify-center items-center bg-black text-white px-4">
+      <div className="max-w-lg w-full text-center bg-gray-900 p-8 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-4">Booking Confirmed!</h1>
         <p className="mb-6">
-          Thank you, <strong>{customerEmail}</strong>, for your booking.
+          Thank you for your booking, <strong>{customerEmail}</strong>! A confirmation email has been sent.
         </p>
 
         {bookedItem && (
-          <div className="text-left mb-6">
+          <div className="text-left mb-6 bg-gray-800 p-4 rounded">
             <h2 className="text-xl font-semibold mb-2">Booking Details:</h2>
             <ul className="space-y-1">
               <li><strong>Car:</strong> {bookedItem.name}</li>
-              <li><strong>Description:</strong> {bookedItem.description}</li>
+              {bookedItem.description && <li><strong>Description:</strong> {bookedItem.description}</li>}
             </ul>
           </div>
         )}
 
-        <p className="mb-6 text-gray-300">
-          A confirmation email has been sent with all your booking details.
-        </p>
-
         <Link
           href="/"
-          className="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-semibold px-6 py-3 rounded-md transition"
+          className="inline-block bg-white text-black font-bold px-6 py-3 rounded hover:bg-gray-200 transition"
         >
           Back to Home
         </Link>
       </div>
-    </div>
+    </section>
   );
 }
