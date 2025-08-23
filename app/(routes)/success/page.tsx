@@ -41,26 +41,25 @@ export default async function Success({ searchParams }: SuccessPageProps) {
   }
 
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center bg-black text-white px-4">
-      <div className="max-w-lg w-full text-center bg-gray-900 p-8 rounded-lg shadow-lg">
+    <section className="min-h-screen flex flex-col justify-center items-center px-4">
+      <div className="max-w-lg w-full text-center p-8 rounded-lg shadow-lg border border-gray-300">
         <h1 className="text-3xl font-bold mb-4">Booking Confirmed!</h1>
         <p className="mb-6">
-          Thank you for your booking, <strong>{customerEmail}</strong>! A confirmation email has been sent.
+          Thank you for your booking! A confirmation email has been sent to your Email:<strong>{customerEmail}</strong>.
         </p>
 
         {bookedItem && (
-          <div className="text-left mb-6 bg-gray-800 p-4 rounded">
+          <div className="text-left mb-6 p-4">
             <h2 className="text-xl font-semibold mb-2">Booking Details:</h2>
             <ul className="space-y-1">
               <li><strong>Car:</strong> {bookedItem.name}</li>
-              {bookedItem.description && <li><strong>Description:</strong> {bookedItem.description}</li>}
             </ul>
           </div>
         )}
 
         <Link
           href="/"
-          className="inline-block bg-white text-black font-bold px-6 py-3 rounded hover:bg-gray-200 transition"
+          className="inline-block bg-black text-white font-bold px-6 py-3 hover:bg-gray-800 cursor-pointer transition"
         >
           Back to Home
         </Link>
